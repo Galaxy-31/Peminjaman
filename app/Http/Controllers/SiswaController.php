@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rombel;
 use App\Models\Siswa;
+use App\Models\Rombel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
-class RombelController extends Controller
+class SiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,15 +19,15 @@ class RombelController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Rombel::all();
+            $data = Siswa::with('rombel')->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
 
                         $btn = '
-                        <form onsubmit="return confirm(\'Apakah anda yakin ingin menghapus '.$row->nama.' ?\');"  action="rombels/'.$row->id.'" method="POST">
+                        <form onsubmit="return confirm(\'Apakah anda yakin ingin menghapus '.$row->nama.' ?\');"  action="siswas/'.$row->id.'" method="POST">
 
-                            <a class="btn btn-primary" href="rombels/'.$row->id.'/edit" >
+                            <a class="btn btn-primary" href="siswas/'.$row->id.'/edit" >
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -49,7 +51,7 @@ class RombelController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('rombels.index');
+        return view('siswas.index');
     }
 
     /**
@@ -59,7 +61,8 @@ class RombelController extends Controller
      */
     public function create()
     {
-        return view('rombels.create');
+        $rombel = Rombel::all();
+        return view('siswas.create', compact('rombel'));
     }
 
     /**
@@ -70,24 +73,39 @@ class RombelController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'rombel' => 'required',
-            'kelas' => 'required',
-            'angkatan' => 'required',
+        $validator = Validator::make($request->all(), [
+            'nis' => 'required',
+            'nama' => 'required',
+            'rombel_id' => 'required',
+            'rayon' => 'required',
+            'jk' => 'required',
         ]);
 
-        Rombel::create($request->all());
+        // dd($request->all());
 
-        return redirect()->route('rombels.index');
+        Siswa::create([
+            'nis' => $request->nis,
+            'nama' => $request->nama,
+            'rombel_id' => $request->rombel_id,
+            'rayon' => $request->rayon,
+            'jk' => $request->jk,
+
+        ]);
+        // DB::table('barangs')->select('nama_barang')->where('nama_barang', )->toSql();
+        // if ($tambahStok) {
+        //     echo 'Ts';
+        // }
+
+        return redirect()->route('siswas.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Rombel  $rombel
+     * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function show(Rombel $rombel)
+    public function show(Siswa $siswa)
     {
         //
     }
@@ -95,45 +113,54 @@ class RombelController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Rombel  $rombel
+     * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Rombel $rombel)
+    public function edit(Siswa $siswa)
     {
-        return view('rombels.edit', compact('rombel'));
+        $rombel = Rombel::all();
+        return view('siswas.edit', compact('siswa', 'rombel'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Rombel  $rombel
+     * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rombel $rombel)
+    public function update(Request $request, Siswa $siswa)
     {
         $request->validate([
-            'rombel' => 'required',
-            'kelas' => 'required',
-            'angkatan' => 'required',
+            'nis' => 'required',
+            'nama' => 'required',
+            'rombel_id' => 'required',
+            'rayon' => 'required',
+            'jk' => 'required',
         ]);
 
-        $rombel->update($request->all());
+        Siswa::create([
+            'nis' => $request->nis,
+            'nama' => $request->nama,
+            'rombel_id' => $request->rombel_id,
+            'rayon' => $request->rayon,
+            'jk' => $request->jk,
 
-        return redirect()->route('rombels.index');
+        ]);
+
+        return redirect()->route('siswas.index');
     }
-
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Rombel  $rombel
+     * @param  \App\Models\Siswa  $siswa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rombel $rombel)
+    public function destroy(Siswa $siswa)
     {
-        $rombel->delete();
-
-        return redirect()->route('rombels.index');
+        $siswa->delete();
+        
+        return redirect()->route('siswas.index');
     }
 }

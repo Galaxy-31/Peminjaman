@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Rombel extends Model
+class Peminjaman extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'nis',
+        'nama',
         'rombel',
+        'rayon',
+        'jk',
         'angkatan',
-        'kelas',
+        'barang',
     ];
 }

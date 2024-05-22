@@ -14,8 +14,8 @@ return [
     'roles_structure' => [
         'Admin' => [
             'rombels' => 'c,r,u,d',
-            'name' => 'c,r,u,d',
-            'name' => 'c,r,u,d',
+            'siswas' => 'c,r,u,d',
+            'peminjamans' => 'c,r,u,d',
             'name' => 'c,r,u,d',
         ],
     ],

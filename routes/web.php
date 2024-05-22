@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\RombelController;
+use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +32,7 @@ Route::group(['middleware' => ['auth']], function ()
     Route::group(['middleware' => ['role:Admin']], function ()
     {
         Route::resource('/rombels', RombelController::class);
+        Route::resource('/siswas', SiswaController::class);
+        Route::resource('/peminjamans', PeminjamanController::class);
     });
 });

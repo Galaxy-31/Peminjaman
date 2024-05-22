@@ -1,35 +1,38 @@
 @extends('layouts.master')
 
-@section('title', 'Rombel')
+@section('title', 'Peminjaman')
 
 @section('content')
     <div class="row mt-4 justify-content-center align-items-center" style="height: calc(75vh)">
         <div class="col-lg-12 mb-lg-0 mb-4">
             <div class="card z-index-2 h-100">
                 <div class="card-header pb-0 pt-3 bg-transparent">
-                    <h3 class="text-capitalize text-center">Create Rombel</h3>
+                    <h3 class="text-capitalize text-center">Create Peminjaman</h3>
                 </div>
                 <div class="card-body p-3">
                     <div class="row">
-                        <form action="{{ route('rombels.store') }}" method="POST">
+                        <form action="{{ route('peminjamans.store') }}" method="POST">
                             @csrf
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="rombel" name="rombel"
-                                        placeholder="Rombel">
+                                    <select name="nis" id="nis" class="form-select">
+                                        <option value="" selected disabled>Nama Siswa</option>
+                                           @foreach ($siswa as $d)
+                                                <option value="{{ $d->nama }}">{{ $d->nama }}</option>
+                                            @endforeach
+                                    </select>
                                 </div>
                             </div>
+                            
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="kelas" name="kelas"
-                                        placeholder="Kelas">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="angkatan" name="angkatan"
-                                        placeholder="Angkatan">
+                                    <select name="barang" id="barang" class="form-select">
+                                        <option value="" selected disabled>Barang Yang Di Pinjam</option>
+                                        <option value="Handphone">Handphone</option>
+                                       <option value="Laptop">Laptop</option>
+                                       <option value="Handphone & Laptop">Handphone & Laptop</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="text-center">

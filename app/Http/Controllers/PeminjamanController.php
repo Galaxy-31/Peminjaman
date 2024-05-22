@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rombel;
+use App\Models\Peminjaman;
 use App\Models\Siswa;
-use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
+use App\Models\Rombel;
 
-class RombelController extends Controller
+use Illuminate\Http\Request;
+
+class PeminjamanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,15 +18,15 @@ class RombelController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Rombel::all();
+            $data = Peminjaman::all();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
 
                         $btn = '
-                        <form onsubmit="return confirm(\'Apakah anda yakin ingin menghapus '.$row->nama.' ?\');"  action="rombels/'.$row->id.'" method="POST">
+                        <form onsubmit="return confirm(\'Apakah anda yakin ingin menghapus '.$row->nama.' ?\');"  action="peminjamans/'.$row->id.'" method="POST">
 
-                            <a class="btn btn-primary" href="rombels/'.$row->id.'/edit" >
+                            <a class="btn btn-primary" href="peminjamans/'.$row->id.'/edit" >
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -49,7 +50,7 @@ class RombelController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('rombels.index');
+        return view('peminjamans.index');
     }
 
     /**
@@ -59,7 +60,9 @@ class RombelController extends Controller
      */
     public function create()
     {
-        return view('rombels.create');
+        $rombel = Rombel::all();
+        $siswa = Siswa::all();
+        return view('peminjamans.create', compact('rombel','siswa'));
     }
 
     /**
@@ -71,69 +74,90 @@ class RombelController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'rombel' => 'required',
-            'kelas' => 'required',
-            'angkatan' => 'required',
+            'nama' => 'required',
+            'barang' => 'required',
         ]);
 
-        Rombel::create($request->all());
+        $siswa = Siswa::where('nama', $request->nama)->first();
 
-        return redirect()->route('rombels.index');
+        Peminjaman::create([
+            'nis' => $siswa->nis,
+            'nama' => $siswa->nama,
+            'rombel' => $siswa->rombel,
+            'rayon' => $siswa->rayon,
+            'jk' => $siswa->jk,  
+            'angkatan' =>siswa->angkatan,
+            'barang' => siswa->barang,      
+        ]);
+
+        // Siswa::create($request->all());
+
+        return redirect()->route('peminjamans.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Rombel  $rombel
+     * @param  \App\Models\Peminjaman  $peminjaman
      * @return \Illuminate\Http\Response
      */
-    public function show(Rombel $rombel)
+    public function show(Peminjaman $peminjaman)
     {
-        //
+        $rombel = Rombel::all();
+        $siswa = Siswa::all();
+        return view('peminjamans.edit', compact('siswa','rombel','siswa'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Rombel  $rombel
+     * @param  \App\Models\Peminjaman  $peminjaman
      * @return \Illuminate\Http\Response
      */
-    public function edit(Rombel $rombel)
+    public function edit(Peminjaman $peminjaman)
     {
-        return view('rombels.edit', compact('rombel'));
+        return view('peminjamans.edit', compact('siswa'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Rombel  $rombel
+     * @param  \App\Models\Peminjaman  $peminjaman
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rombel $rombel)
+    public function update(Request $request, Peminjaman $peminjaman)
     {
         $request->validate([
-            'rombel' => 'required',
-            'kelas' => 'required',
-            'angkatan' => 'required',
+            'nama' => 'required',
+            'barang' => 'required',
         ]);
 
-        $rombel->update($request->all());
+        $Peminjaman->update([
+            'nis' => $request->nis,
+            'nama' => $request->nama,
+            'rombel' => $request->rombel,
+            'rayon' => $request->rayon,
+            'jk' => $request->jk,
+            'angkatan' => $request->angkatan,
+            'barang' => $request->barang,
+        ]);
 
-        return redirect()->route('rombels.index');
+        // $siswa->update($request->all());
+
+        return redirect()->route('peminjamans.index');
     }
-
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Rombel  $rombel
+     * @param  \App\Models\Peminjaman  $peminjaman
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rombel $rombel)
+    public function destroy(Peminjaman $peminjaman)
     {
-        $rombel->delete();
+        $peminjaman->delete();
 
-        return redirect()->route('rombels.index');
+        return redirect()->route('peminjamans.index');
     }
 }

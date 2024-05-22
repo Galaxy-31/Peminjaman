@@ -83,4 +83,26 @@
 
     document.getElementById('greet').innerHTML = msg;
 </script>
+<h4 class align="center" >Data Peminjaman</h4>
+<table id="example" class="table hover order-column row-border,sortable" style="width:100%">
+    <thead>
+        <tr>
+            <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+            <th>No</th>
+            <th>NIS</th>
+            <th>Nama</th>
+            <th>Rombel</th>
+            <th>Rayon</th>
+            <th>Jenis Kelamin</th>
+            <th>Angkatan</th>
+            <th>Barang Di Pinjam</th>
+            <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+
 @endsection

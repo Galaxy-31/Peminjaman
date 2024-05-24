@@ -18,6 +18,7 @@
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link href="{{ asset('master/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/54fa0558c0.js" crossorigin="anonymous"></script>
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('master/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
     <!-- DataTables -->
@@ -234,5 +235,5 @@
     <script src="{{ asset('master/assets/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
     @yield('script')
 </body>
-
+@include('sweetalert::alert')
 </html>

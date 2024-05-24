@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Peminjaman;
 use App\Models\Siswa;
 use App\Models\Rombel;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class PeminjamanController extends Controller
 {
@@ -18,21 +19,15 @@ class PeminjamanController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Peminjaman::all();
+            $data = Peminjaman::get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
 
                         $btn = '
-                        <form onsubmit="return confirm(\'Apakah anda yakin ingin menghapus '.$row->nama.' ?\');"  action="peminjamans/'.$row->id.'" method="POST">
+                        <form onsubmit="return confirm(\'Apakah anda yakin dia sudah mengembalikan gawai '.$row->nama.' ?\');"  action="peminjamans/'.$row->id.'" method="POST">
 
-                            <a class="btn btn-primary" href="peminjamans/'.$row->id.'/edit" >
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                            </svg>
-                            </a>
-
+                            
                             '.csrf_field().'
                             '.method_field("DELETE").'
 
@@ -73,7 +68,7 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nama' => 'required',
             'barang' => 'required',
         ]);
@@ -83,11 +78,11 @@ class PeminjamanController extends Controller
         Peminjaman::create([
             'nis' => $siswa->nis,
             'nama' => $siswa->nama,
-            'rombel' => $siswa->rombel,
+            'rombel' => $siswa->rombel->rombel,
             'rayon' => $siswa->rayon,
             'jk' => $siswa->jk,  
-            'angkatan' =>siswa->angkatan,
-            'barang' => siswa->barang,      
+            'angkatan' => $siswa->rombel->angkatan,
+            'barang' => $request->barang,
         ]);
 
         // Siswa::create($request->all());
@@ -116,7 +111,9 @@ class PeminjamanController extends Controller
      */
     public function edit(Peminjaman $peminjaman)
     {
-        return view('peminjamans.edit', compact('siswa'));
+        $rombel = Rombel::all();
+        $siswa = Siswa::all();
+        return view('peminjamans.edit', compact('rombel','siswa'));
     }
 
     /**
@@ -133,7 +130,7 @@ class PeminjamanController extends Controller
             'barang' => 'required',
         ]);
 
-        $Peminjaman->update([
+        $peminjaman->update([
             'nis' => $request->nis,
             'nama' => $request->nama,
             'rombel' => $request->rombel,

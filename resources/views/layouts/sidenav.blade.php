@@ -6,7 +6,7 @@
         <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html "
             target="_blank">
             <img src="{{ asset('master/assets/img/logo-ct-dark.png') }}" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold">---</span>
+            <span class="ms-1 font-weight-bold">Peminjaman Gawai</span>
         </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -29,7 +29,7 @@
             <a class="nav-link {{ request()->is('rombels') ? 'active' : '' }}" href="{{ url('rombels') }}">
                 <div
                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-box-2 text-warning text-sm opacity-10"></i>
+                    <i class="fa-solid fa-landmark fa-shake text-sm opacity-10" style="color: #74C0FC;"></i>                 
                 </div>
                 
                 <span class="nav-link-text ms-1">Rombel</span>
@@ -39,7 +39,7 @@
             <a class="nav-link {{ request()->is('siswas') ? 'active' : '' }}" href="{{ url('siswas') }}">
                 <div
                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-box-2 text-warning text-sm opacity-10"></i>
+                    <i class="fa-solid fa-user fa-shake  text-sm opacity-10" style="color: #74C0FC;"></i>                
                 </div>
                 <span class="nav-link-text ms-1">Siswa</span>
             </a>
@@ -48,9 +48,9 @@
             <a class="nav-link {{ request()->is('peminjamans') ? 'active' : '' }}" href="{{ url('peminjamans') }}">
                 <div
                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-box-2 text-warning text-sm opacity-10"></i>
-                </div>
-                <span class="nav-link-text ms-1">Peminjaman</span>
+                    <i class="fa-solid fa-rotate fa-shake text-sm opacity-10" style="color: #74C0FC;"></i>            
+                </div>    
+                    <span class="nav-link-text ms-1">Peminjaman</span>
             </a>
         </li>
         @endrole

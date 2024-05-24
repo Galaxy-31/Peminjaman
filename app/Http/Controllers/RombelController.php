@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rombel;
-use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -78,7 +77,8 @@ class RombelController extends Controller
 
         Rombel::create($request->all());
 
-        return redirect()->route('rombels.index');
+        toast('Data successfully created!', 'success');
+            return redirect()->route('rombels.index');
     }
 
     /**
@@ -120,6 +120,7 @@ class RombelController extends Controller
 
         $rombel->update($request->all());
 
+        toast('Data successfully Update!', 'success');
         return redirect()->route('rombels.index');
     }
 
@@ -134,6 +135,7 @@ class RombelController extends Controller
     {
         $rombel->delete();
 
+        toast('Data deleted successfully!', 'success');
         return redirect()->route('rombels.index');
     }
 }

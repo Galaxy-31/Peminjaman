@@ -12,46 +12,23 @@
                         <div class="numbers">
                             <p class="text-sm mb-0 text-uppercase font-weight-bold">Ada</p>
                             <h5 class="font-weight-bolder">
-                                {{-- {{ $ }} --}}
+                                {{ $peminjamans }}
                             </h5>
                             <p class="mb-0">
-                                Mengembalikan
+                                Peminjaman
                             </p>
                         </div>
                     </div>
                     <div class="col-4 text-end">
                         <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                            <i class="ni ni-collection text-lg opacity-10" aria-hidden="true"></i>
+                            <i class="fa-solid fa-rotate fa-shake text-lg opacity-10" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-sm-6">
-        <div class="card">
-            <div class="card-body p-3">
-                <div class="row">
-                    <div class="col-8">
-                        <div class="numbers">
-                            <p class="text-sm mb-0 text-uppercase font-weight-bold">Ada</p>
-                            <h5 class="font-weight-bolder">
-                                {{-- {{ $ }} --}}
-                            </h5>
-                            <p class="mb-0">
-                                //
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-4 text-end">
-                        <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-                            <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </div>
 <div class="row mt-4">
     <div class="col-lg-12 mb-lg-0 mb-4">
@@ -84,9 +61,10 @@
     document.getElementById('greet').innerHTML = msg;
 </script>
 <h4 class align="center" >Data Peminjaman</h4>
-<table id="example" class="table hover order-column row-border,sortable" style="width:100%">
-    <thead>
-        <tr>
+<div  class align="right">
+<table class align="right" id="example" class="table hover order-column row-border,sortable" style="width:60%">
+        <thead>
+        <tr class align="center">
             <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
             <th>No</th>
             <th>NIS</th>
@@ -104,5 +82,78 @@
     </tbody>
 </table>
 
+<script type="text/javascript">
+    $(function() {
+        var table = $('#example').DataTable({
+            processing: true,
+            serverSide: true,
+            scrollX: true,
+            ajax: "{{ route('peminjamans.index') }}",
+            columns: [{
+                    data: "DT_RowIndex",
+                    name: "DT_RowIndex",
+                    orderable: true,
+                    searchable: false
+                },
+                {
+                    data: "nis",
+                    name: "nis"
+                },
+                {
+                    data: "nama",
+                    name: "nama"
+                },
+                {
+                    data: "rombel",
+                    name: "rombel"
+                },
+                {
+                    data: "rayon",
+                    name: "rayon"
+                },
+                {
+                    data: "jk",
+                    name: "jk"
+                },
+                {
+                    data: "angkatan",
+                    name: "angkatan"
+                },
+                {
+                    data: "barang",
+                    name: "barang"
+                },
+                {
+                    data: "action",
+                    name: "action",
+                    orderable: false,
+                    searchable: false
+                },
+            ]
+        });
 
+        $('#example').on('click', '.delete[data-remote]', function(e) {
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var url = $(this).data('remote');
+            // confirm then
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                dataType: 'json',
+                data: {
+                    method: '_DELETE',
+                    submit: true
+                }
+            }).always(function(data) {
+                $('#example').DataTable().draw(false);
+            });
+        });
+    });
+</script>
+</div>
 @endsection

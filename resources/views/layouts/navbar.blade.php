@@ -44,7 +44,7 @@
                     </li>
                     <li class="nav-item d-flex align-items-center mx-3">
                         <a href="javascript:void" onclick="$('#logout-form').submit();">
-                            <i class="fas fa-sign-out-alt text-white"></i>
+                            <i class="fa-solid fa-right-from-bracket fa-beat text-white"></i>
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf

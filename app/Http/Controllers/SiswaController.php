@@ -148,8 +148,8 @@ class SiswaController extends Controller
 
         ]);
 
-        return redirect()->route('siswas.index');
-    }
+        toast('Data successfully Update!', 'success');
+        return redirect()->route('siswas.index');    }
 
     /**
      * Remove the specified resource from storage.
@@ -161,6 +161,7 @@ class SiswaController extends Controller
     {
         $siswa->delete();
         
-        return redirect()->route('siswas.index');
+        toast('Data Deleted successfully !', 'success');
+        return redirect()->route('siswas.index');    
     }
 }

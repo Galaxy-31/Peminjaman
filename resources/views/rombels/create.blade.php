@@ -16,19 +16,19 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="rombel" name="rombel"
+                                    <input type="text" class="form-control" id="required" id="rombel" name="rombel"
                                         placeholder="Rombel">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="kelas" name="kelas"
+                                    <input type="text" class="form-control" id="required" id="kelas" name="kelas"
                                         placeholder="Kelas">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="angkatan" name="angkatan"
+                                    <input type="text" class="form-control"  id="required" id="angkatan" name="angkatan"
                                         placeholder="Angkatan">
                                 </div>
                             </div>

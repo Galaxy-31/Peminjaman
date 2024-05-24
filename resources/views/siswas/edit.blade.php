@@ -29,10 +29,15 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="rombel" name="rombel"
-                                        placeholder="Rombel" value="{{ $siswa->rombel }}">
+                                     <select name="rombel_id" id="rombel_id" class="form-select">
+                                        <option value="" selected disabled>{{ $siswa->rombel_id }}</option>
+                                        @foreach ($rombel as $d)
+                                            <option value="{{ $d->id }}">{{ $d->rombel }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
+                            
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="rayon" name="rayon"
@@ -41,8 +46,11 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="jk" name="jk"
-                                        placeholder="Jenis Kelamin" value="{{ $siswa->jk }}">
+                                    <select name="jk" id="jk" class="form-select">
+                                        <option value="" selected disabled>{{ $siswa->jk }}</option>
+                                       <option value="Laki-Laki">Laki-Laki</option>
+                                       <option value="Perempuan">Perempuan</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="text-center">

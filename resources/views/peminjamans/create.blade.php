@@ -16,7 +16,7 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <select name="nis" id="nis" class="form-select">
+                                    <select name="nama" id="nama" class="form-select">
                                         <option value="" selected disabled>Nama Siswa</option>
                                            @foreach ($siswa as $d)
                                                 <option value="{{ $d->nama }}">{{ $d->nama }}</option>

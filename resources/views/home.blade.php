@@ -74,6 +74,8 @@
             <th>Jenis Kelamin</th>
             <th>Angkatan</th>
             <th>Barang Di Pinjam</th>
+            <th>Tanggal Pinjam</th>
+            <th>Tanggal Kembali</th>
             <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
             <th>Action</th>
         </tr>
@@ -122,6 +124,14 @@
                 {
                     data: "barang",
                     name: "barang"
+                },
+                {
+                    data: "tgl_pinjam",
+                    name: "tgl_pinjam"
+                },
+                {
+                    data: "tgl_kembali",
+                    name: "tgl_kembali"
                 },
                 {
                     data: "action",

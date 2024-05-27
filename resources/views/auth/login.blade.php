@@ -8,7 +8,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('master/assets/img/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('master/assets/img/favicon.png') }}">
     <title>
-        Login | My POS
+        Login | Peminjaman Gawai
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -31,8 +31,8 @@
                         <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
                             <div class="card card-plain">
                                 <div class="card-header pb-0 text-start">
-                                    <h4 class="font-weight-bolder">Sign In</h4>
-                                    <p class="mb-0">Silahkan masukkan password dan email anda</p>
+                                    <h4 class="font-weight-bolder" class align="center">Sign In</h4>
+                                    <p class="mb-0" class align="center" style="text-decoration: aqua">Silahkan masukkan password dan email anda</p>
                                 </div>
                                 <div class="card-body">
                                     <form role="form" action="{{ route('login') }}" method="POST">

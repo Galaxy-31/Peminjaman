@@ -17,5 +17,7 @@ class Peminjaman extends Model
         'jk',
         'angkatan',
         'barang',
+       
+        
     ];
 }

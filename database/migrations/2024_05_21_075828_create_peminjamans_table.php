@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('jk');
             $table->string('angkatan');
             $table-> string('barang');
-
             $table->timestamps();
         });
     }

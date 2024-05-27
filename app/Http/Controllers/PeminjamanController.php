@@ -71,6 +71,8 @@ class PeminjamanController extends Controller
         $validator = Validator::make($request->all(), [
             'nama' => 'required',
             'barang' => 'required',
+            'tgl_pinjam' => 'required',
+            'tgl_kembali' => 'required',
         ]);
 
         $siswa = Siswa::where('nama', $request->nama)->first();
@@ -83,6 +85,7 @@ class PeminjamanController extends Controller
             'jk' => $siswa->jk,  
             'angkatan' => $siswa->rombel->angkatan,
             'barang' => $request->barang,
+        
         ]);
 
         // Siswa::create($request->all());
